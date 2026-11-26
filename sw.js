@@ -1,5 +1,5 @@
-const CACHE_NAME = 'cardesk-scamcheck-v2';
-const STATIC_ASSETS = ['/', '/index.html', '/style.css?v=2', '/app.js?v=2', '/manifest.json'];
+const CACHE_NAME = 'cardesk-scamcheck-v3';
+const STATIC_ASSETS = ['/', '/index.html', '/style.css?v=3', '/app.js?v=3', '/manifest.json?v=3'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -18,7 +18,7 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET' || event.request.url.includes('/api/')) return;
+  if (event.request.method !== 'GET' || event.request.url.includes('/api/analyze')) return;
   event.respondWith(
     fetch(event.request)
       .then((res) => {
