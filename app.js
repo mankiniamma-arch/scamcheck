@@ -54,11 +54,11 @@ const footCopy = document.getElementById('footCopy');
 
 let selectedBase64 = null;
 let selectedMime = 'image/jpeg';
-let deferredPrompt = null;
+let deferredPrompt = window.__deferredInstallPrompt || null;
 let lastShareMessage = `Got a weird US toll SMS or DMV notice? Check SCAM or REAL in 2 seconds for free: ${SITE_URL}`;
 
 // ===================================================
-// 1. Android & iPhone PWA Home Screen Install
+// 1. Universal App Install (Windows, Mac, Android, iOS)
 // ===================================================
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -67,7 +67,7 @@ if ('serviceWorker' in navigator) {
 }
 
 const ua = navigator.userAgent || '';
-const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 const isAndroid = /Android/i.test(ua);
 const isStandalone =
   window.matchMedia('(display-mode: standalone)').matches ||
@@ -77,17 +77,25 @@ if (isStandalone && installBtn) {
   installBtn.hidden = true;
 }
 
+window.addEventListener('cardesk-install-ready', () => {
+  deferredPrompt = window.__deferredInstallPrompt;
+  if (installBtn && !isStandalone) {
+    installBtn.hidden = false;
+  }
+});
+
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  if (installBtn) {
+  window.__deferredInstallPrompt = e;
+  if (installBtn && !isStandalone) {
     installBtn.hidden = false;
-    installBtn.textContent = 'Install';
   }
 });
 
 window.addEventListener('appinstalled', () => {
   deferredPrompt = null;
+  window.__deferredInstallPrompt = null;
   if (installBtn) installBtn.hidden = true;
 });
 
@@ -97,7 +105,7 @@ function openInstallGuide() {
 
   if (isIOS) {
     installModalTitle.textContent = 'Install on iPhone / iPad';
-    installModalNote.textContent = 'Add CarDesk ScamCheck to your iPhone Home Screen in 2 taps (Safari):';
+    installModalNote.textContent = 'Add CarDesk ScamCheck to your Home Screen in 2 taps (Safari):';
     steps = [
       'Tap the <strong>Share</strong> icon (square with upward arrow) at the bottom of Safari.',
       'Scroll down and tap <strong>Add to Home Screen</strong>, then tap <strong>Add</strong>.'
@@ -106,16 +114,16 @@ function openInstallGuide() {
     installModalTitle.textContent = 'Install on Android';
     installModalNote.textContent = 'Add CarDesk ScamCheck directly to your Home Screen:';
     steps = [
-      'Make sure this link is open in <strong>Google Chrome</strong> (not inside WhatsApp/Instagram browser).',
-      'Tap the <strong>3 dots (&#8942;)</strong> at the top-right corner of Chrome.',
+      'Make sure this page is open in <strong>Google Chrome</strong> or <strong>Edge</strong> (not inside WhatsApp/Instagram browser).',
+      'Tap the <strong>3 dots (&#8942;)</strong> at the top-right corner.',
       'Tap <strong>Install app</strong> or <strong>Add to Home screen</strong>.'
     ];
   } else {
-    installModalTitle.textContent = 'Install Desktop App';
-    installModalNote.textContent = 'Add CarDesk ScamCheck to your computer:';
+    installModalTitle.textContent = 'Install on Windows / Mac Desktop';
+    installModalNote.textContent = 'Install CarDesk ScamCheck as a standalone desktop app:';
     steps = [
-      'Click the <strong>Install icon</strong> on the right side of your Chrome or Edge address bar.',
-      'Click <strong>Install</strong> to launch it as a standalone app.'
+      'Click the <strong>Install icon</strong> (monitor with down arrow) on the right side of your Chrome or Edge address bar.',
+      'Or open the browser menu (<strong>&#8942;</strong>) &rarr; <strong>Cast, save, and share</strong> &rarr; <strong>Install CarDesk US</strong>.'
     ];
   }
 
@@ -130,10 +138,12 @@ function openInstallGuide() {
 
 if (installBtn) {
   installBtn.addEventListener('click', async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
+    const promptEvent = deferredPrompt || window.__deferredInstallPrompt;
+    if (promptEvent) {
+      promptEvent.prompt();
+      const { outcome } = await promptEvent.userChoice;
       deferredPrompt = null;
+      window.__deferredInstallPrompt = null;
       if (outcome === 'accepted') {
         installBtn.hidden = true;
       }
@@ -447,7 +457,9 @@ function renderResult(data) {
 
   loadingCard.hidden = true;
   resultCard.hidden = false;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (window.innerWidth < 960) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
 
 resetBtn.addEventListener('click', () => {
@@ -456,5 +468,7 @@ resetBtn.addEventListener('click', () => {
   hideError();
   resultCard.hidden = true;
   checkerCard.hidden = false;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (window.innerWidth < 960) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 });
