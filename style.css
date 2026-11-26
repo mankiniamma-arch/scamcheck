@@ -296,7 +296,7 @@ body {
 .desktop-nav {
   display: none;
   align-items: center;
-  gap: 26px;
+  gap: 24px;
 }
 
 .desktop-nav a {
@@ -359,7 +359,6 @@ body {
   align-items: start;
 }
 
-/* Hero Column (Mobile Default: Centered) */
 .hero-col {
   text-align: center;
 }
@@ -405,7 +404,6 @@ body {
   color: var(--text);
 }
 
-/* Trust Chips */
 .trust-row {
   display: flex;
   flex-wrap: wrap;
@@ -436,7 +434,6 @@ body {
 .dot-mag   { background: var(--magenta); box-shadow: 0 0 8px var(--magenta); }
 .dot-green { background: var(--real); box-shadow: 0 0 8px var(--real); }
 
-/* Supported US Agencies & Mini Steps (Hidden on tiny phones for clean fold, shown on Tablet & Laptop) */
 .agency-box,
 .mini-steps {
   display: none;
@@ -489,7 +486,6 @@ body {
   display: none;
 }
 
-/* Upload Zone */
 .drop-zone {
   display: flex;
   flex-direction: column;
@@ -533,7 +529,6 @@ body {
   color: var(--muted);
 }
 
-/* Preview */
 .preview-box {
   position: relative;
   border-radius: 14px;
@@ -564,7 +559,6 @@ body {
   cursor: pointer;
 }
 
-/* Divider & Textarea */
 .divider {
   display: flex;
   align-items: center;
@@ -615,7 +609,6 @@ textarea::placeholder {
   text-align: center;
 }
 
-/* Primary & Secondary Buttons */
 .btn-primary {
   display: block;
   width: 100%;
@@ -771,7 +764,6 @@ textarea::placeholder {
   color: #cbd5e1;
 }
 
-/* Details */
 .detail-card {
   margin-bottom: 14px;
 }
@@ -818,7 +810,6 @@ textarea::placeholder {
   background: var(--magenta);
 }
 
-/* Paid Ticket CTA */
 .ticket-cta {
   background: linear-gradient(145deg, rgba(0, 240, 255, 0.1), rgba(255, 0, 229, 0.13));
   border: 1px solid rgba(0, 240, 255, 0.34);
@@ -846,7 +837,6 @@ textarea::placeholder {
   color: #cbd5e1;
 }
 
-/* Viral Share Strip */
 .share-card {
   padding: 16px 18px;
 }
@@ -909,9 +899,10 @@ textarea::placeholder {
 }
 
 /* ===================================================
-   Cross-Sell Ecosystem & FAQ Sections
+   Cross-Sell Ecosystem, SEO Guide & FAQ Sections
    =================================================== */
 .ecosystem-section,
+.seo-guide-section,
 .faq-section {
   margin-top: 44px;
 }
@@ -1004,6 +995,48 @@ textarea::placeholder {
 
 .eco-cta-cyan {
   color: var(--cyan);
+}
+
+/* SEO Authority Guide Grid */
+.guide-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.guide-card {
+  background: rgba(13, 19, 40, 0.58);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px 20px;
+}
+
+.guide-card h2 {
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: #f8fafc;
+  margin-bottom: 8px;
+}
+
+.guide-card p {
+  font-size: 0.84rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.guide-card strong {
+  color: #e2e8f0;
+}
+
+.guide-card code {
+  color: var(--cyan);
+  font-size: 0.8rem;
+}
+
+.guide-card a {
+  color: var(--cyan);
+  text-decoration: none;
+  font-weight: 700;
 }
 
 /* FAQ Grid */
@@ -1106,7 +1139,6 @@ textarea::placeholder {
   color: var(--cyan);
 }
 
-/* Golden/Amber Legal Disclaimer Box matching BuyerCheck */
 .disclaimer-box {
   background: rgba(245, 158, 11, 0.06);
   border: 1px solid rgba(245, 158, 11, 0.42);
@@ -1380,6 +1412,10 @@ textarea::placeholder {
 
   .card {
     padding: 24px;
+  }
+
+  .guide-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .faq-grid {
