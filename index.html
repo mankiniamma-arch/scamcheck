@@ -33,12 +33,13 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="CarDesk ScamCheck" />
 
+  <!-- Non-blocking Font Load (Never freezes screen) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="/style.css?v=2" />
 
-  <!-- Google Rich SEO Schema (WebApplication + FAQPage) -->
+  <!-- Google Rich SEO Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -90,26 +91,27 @@
   </script>
 </head>
 <body>
-  <!-- 1.8s Premium Black Splash Screen (Alternating Headlight Flash) -->
-  <div id="splashScreen" class="splash-screen" aria-label="Loading CarDesk US">
-    <div class="splash-inner">
-      <div class="splash-car-wrap">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 96" class="splash-svg" role="img" aria-label="CarDesk US">
+  <!-- Running Car Assembly -> Neon Circle -> Fly to Top Logo Intro -->
+  <div id="introSplash" class="intro-splash" aria-label="Loading CarDesk US">
+    <div class="intro-backdrop"></div>
+    <div class="intro-stage">
+      <div id="introBadge" class="intro-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" class="intro-svg" role="img" aria-label="CarDesk US">
           <defs>
-            <linearGradient id="splashNeon" x1="0%" y1="0%" x2="100%" y2="0%">
+            <linearGradient id="introNeon" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stop-color="#00f0ff"/>
               <stop offset="50%" stop-color="#8b5cf6"/>
               <stop offset="100%" stop-color="#ff00e5"/>
             </linearGradient>
-            <filter id="spGlowCyan" x="-80%" y="-80%" width="260%" height="260%">
-              <feGaussianBlur stdDeviation="4.5" result="b"/>
+            <filter id="glowCyan" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="3.5" result="b"/>
               <feMerge>
                 <feMergeNode in="b"/>
                 <feMergeNode in="SourceGraphic"/>
               </feMerge>
             </filter>
-            <filter id="spGlowMag" x="-80%" y="-80%" width="260%" height="260%">
-              <feGaussianBlur stdDeviation="4.5" result="b"/>
+            <filter id="glowMag" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="3.5" result="b"/>
               <feMerge>
                 <feMergeNode in="b"/>
                 <feMergeNode in="SourceGraphic"/>
@@ -117,28 +119,42 @@
             </filter>
           </defs>
 
-          <ellipse class="sp-underglow" cx="60" cy="79" rx="40" ry="4.5" fill="url(#splashNeon)"/>
-          <ellipse class="sp-beam-left" cx="29" cy="54" rx="18" ry="8" fill="#00f0ff" opacity="0"/>
-          <ellipse class="sp-beam-right" cx="91" cy="54" rx="18" ry="8" fill="#ff00e5" opacity="0"/>
+          <!-- Inner Circle Glow Background -->
+          <circle class="intro-ring-bg" cx="70" cy="70" r="56" fill="#070c1c" />
 
-          <g transform="translate(10, 14)" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="14" y="54" width="15" height="7" rx="2" fill="#060913" stroke="#00f0ff" stroke-width="2.1"/>
-            <rect x="71" y="54" width="15" height="7" rx="2" fill="#060913" stroke="#ff00e5" stroke-width="2.1"/>
-          </g>
+          <!-- Animated Neon Energy Circle (Draws around the assembled car) -->
+          <circle class="intro-ring-arc" cx="70" cy="70" r="58" fill="none" stroke="url(#introNeon)" stroke-width="3.2" stroke-linecap="round" />
 
-          <g class="sp-body" transform="translate(10, 14)" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M 18 30 L 28 14 Q 50 9 72 14 L 82 30 Z" fill="#0d172e" stroke="url(#splashNeon)" stroke-width="2.6"/>
-            <path d="M 8 48 L 11 34 Q 15 30 22 30 L 78 30 Q 85 30 89 34 L 92 48 Q 92 54 86 54 L 14 54 Q 8 54 8 48 Z" fill="#0a1124" stroke="url(#splashNeon)" stroke-width="2.9"/>
-            <path class="sp-hl-left" filter="url(#spGlowCyan)" d="M 14 39 L 29 41 L 26 45 L 13 44 Z" fill="#00f0ff"/>
-            <path class="sp-hl-right" filter="url(#spGlowMag)" d="M 86 39 L 71 41 L 74 45 L 87 44 Z" fill="#ff00e5"/>
-            <rect x="35" y="42" width="30" height="7" rx="2" fill="none" stroke="url(#splashNeon)" stroke-width="1.9"/>
+          <!-- Car Assembly Centered Inside Circle -->
+          <g transform="translate(20, 36)" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Wheels (Pop in from bottom) -->
+            <g class="car-part-wheels">
+              <rect x="14" y="54" width="15" height="7" rx="2" fill="#060913" stroke="#00f0ff" stroke-width="2.2"/>
+              <rect x="71" y="54" width="15" height="7" rx="2" fill="#060913" stroke="#ff00e5" stroke-width="2.2"/>
+            </g>
+
+            <!-- Top Part: Roof & Cabin (Drops in from top) -->
+            <g class="car-part-top">
+              <path d="M 18 30 L 28 14 Q 50 9 72 14 L 82 30 Z" fill="#0f1b33" stroke="url(#introNeon)" stroke-width="2.7"/>
+            </g>
+
+            <!-- Bottom Part: Bumper, Grille & Headlights (Slides in from bottom) -->
+            <g class="car-part-bottom">
+              <path d="M 8 48 L 11 34 Q 15 30 22 30 L 78 30 Q 85 30 89 34 L 92 48 Q 92 54 86 54 L 14 54 Q 8 54 8 48 Z" fill="#0a1124" stroke="url(#introNeon)" stroke-width="3"/>
+              <path class="intro-hl-left" filter="url(#glowCyan)" d="M 14 39 L 29 41 L 26 45 L 13 44 Z" fill="#00f0ff"/>
+              <path class="intro-hl-right" filter="url(#glowMag)" d="M 86 39 L 71 41 L 74 45 L 87 44 Z" fill="#ff00e5"/>
+              <rect x="35" y="42" width="30" height="7" rx="2" fill="none" stroke="url(#introNeon)" stroke-width="2"/>
+            </g>
           </g>
         </svg>
       </div>
-      <div class="splash-brand">
-        <span class="sb-cyan">CarDesk</span> <span class="sb-mag">US</span>
+
+      <div id="introBrandText" class="intro-brand-wrap">
+        <div class="splash-brand">
+          <span class="sb-cyan">CarDesk</span> <span class="sb-mag">US</span>
+        </div>
+        <div class="splash-tag">TOLL &amp; DMV SCAM AI</div>
       </div>
-      <div class="splash-tag">TOLL &amp; DMV SCAM AI</div>
     </div>
   </div>
 
@@ -150,7 +166,7 @@
   <header class="navbar">
     <div class="nav-inner">
       <a href="/" class="brand-logo" aria-label="CarDesk US Home">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 74" width="188" height="44" role="img" aria-label="CarDesk US">
+        <svg id="navCarTarget" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 68" width="46" height="32" role="img" aria-label="CarDesk Logo">
           <defs>
             <linearGradient id="navNeon" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stop-color="#00f0ff"/>
@@ -158,20 +174,20 @@
             </linearGradient>
           </defs>
           <g stroke-linecap="round" stroke-linejoin="round">
-            <rect x="14" y="54" width="15" height="7" rx="2" fill="#090d1a" stroke="#00f0ff" stroke-width="2"/>
-            <rect x="71" y="54" width="15" height="7" rx="2" fill="#090d1a" stroke="#ff00e5" stroke-width="2"/>
+            <rect x="14" y="54" width="15" height="7" rx="2" fill="#090d1a" stroke="#00f0ff" stroke-width="2.2"/>
+            <rect x="71" y="54" width="15" height="7" rx="2" fill="#090d1a" stroke="#ff00e5" stroke-width="2.2"/>
           </g>
           <g class="nav-car-body" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M 18 30 L 28 14 Q 50 9 72 14 L 82 30 Z" fill="#0f1b33" stroke="url(#navNeon)" stroke-width="2.5"/>
-            <path d="M 8 48 L 11 34 Q 15 30 22 30 L 78 30 Q 85 30 89 34 L 92 48 Q 92 54 86 54 L 14 54 Q 8 54 8 48 Z" fill="#0c1428" stroke="url(#navNeon)" stroke-width="2.8"/>
+            <path d="M 18 30 L 28 14 Q 50 9 72 14 L 82 30 Z" fill="#0f1b33" stroke="url(#navNeon)" stroke-width="2.7"/>
+            <path d="M 8 48 L 11 34 Q 15 30 22 30 L 78 30 Q 85 30 89 34 L 92 48 Q 92 54 86 54 L 14 54 Q 8 54 8 48 Z" fill="#0c1428" stroke="url(#navNeon)" stroke-width="3"/>
             <path class="nav-hl-left" d="M 14 39 L 29 41 L 26 45 L 13 44 Z" fill="#00f0ff"/>
             <path class="nav-hl-right" d="M 86 39 L 71 41 L 74 45 L 87 44 Z" fill="#ff00e5"/>
-            <rect x="35" y="42" width="30" height="7" rx="2" fill="none" stroke="url(#navNeon)" stroke-width="1.8"/>
+            <rect x="35" y="42" width="30" height="7" rx="2" fill="none" stroke="url(#navNeon)" stroke-width="2"/>
           </g>
-          <text x="106" y="46" font-family="'Segoe UI', Inter, Arial, sans-serif" font-weight="800" font-size="28" letter-spacing="0.4">
-            <tspan fill="#38f6ff">CarDesk </tspan><tspan fill="#ff2ae6">US</tspan>
-          </text>
         </svg>
+        <span class="brand-wordmark">
+          <span class="sb-cyan">CarDesk</span> <span class="sb-mag">US</span>
+        </span>
       </a>
 
       <button id="installBtn" class="install-btn" type="button">
@@ -179,6 +195,54 @@
       </button>
     </div>
   </header>
+
+  <!-- Instant Inline Intro Controller (Runs immediately — never gets stuck) -->
+  <script>
+    (function () {
+      var splash = document.getElementById('introSplash');
+      var badge = document.getElementById('introBadge');
+      var brandText = document.getElementById('introBrandText');
+      var target = document.getElementById('navCarTarget');
+      if (!splash) return;
+
+      var finished = false;
+      function closeIntro() {
+        if (finished) return;
+        finished = true;
+        splash.classList.add('intro-done');
+        setTimeout(function () {
+          splash.style.display = 'none';
+        }, 320);
+      }
+
+      function flyToLogo() {
+        if (finished) return;
+        if (brandText) brandText.classList.add('intro-text-out');
+
+        if (badge && target) {
+          var bRect = badge.getBoundingClientRect();
+          var tRect = target.getBoundingClientRect();
+          var dx = (tRect.left + tRect.width / 2) - (bRect.left + bRect.width / 2);
+          var dy = (tRect.top + tRect.height / 2) - (bRect.top + bRect.height / 2);
+          var scale = Math.max(0.24, Math.min(0.42, tRect.width / bRect.width));
+
+          badge.style.transition = 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease 0.42s';
+          badge.style.transform = 'translate3d(' + dx.toFixed(1) + 'px, ' + dy.toFixed(1) + 'px, 0) scale(' + scale.toFixed(3) + ')';
+          badge.style.opacity = '0';
+        }
+
+        splash.classList.add('intro-reveal');
+        setTimeout(closeIntro, 680);
+      }
+
+      // 1.45s assemble + circle -> fly straight to top logo -> open screen
+      setTimeout(flyToLogo, 1450);
+      // Hard safety cutoff at 2.4s (impossible to hang)
+      setTimeout(closeIntro, 2400);
+      // Tap anywhere to skip immediately
+      splash.addEventListener('click', closeIntro);
+    })();
+  </script>
 
   <main class="container">
     <!-- Hero -->
@@ -381,6 +445,6 @@
     </div>
   </div>
 
-  <script src="/app.js"></script>
+  <script src="/app.js?v=2"></script>
 </body>
 </html>
