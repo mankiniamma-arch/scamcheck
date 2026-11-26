@@ -1,7 +1,6 @@
 const SITE_URL = 'https://scamcheck.cardeskus.com/';
 
 // Elements
-const splashScreen = document.getElementById('splashScreen');
 const fileInput = document.getElementById('fileInput');
 const dropZone = document.getElementById('dropZone');
 const previewBox = document.getElementById('previewBox');
@@ -45,7 +44,9 @@ const shareFb = document.getElementById('shareFb');
 const shareReddit = document.getElementById('shareReddit');
 const copyLinkBtn = document.getElementById('copyLinkBtn');
 
+const footNativeShare = document.getElementById('footNativeShare');
 const footWa = document.getElementById('footWa');
+const footSms = document.getElementById('footSms');
 const footX = document.getElementById('footX');
 const footFb = document.getElementById('footFb');
 const footReddit = document.getElementById('footReddit');
@@ -54,46 +55,10 @@ const footCopy = document.getElementById('footCopy');
 let selectedBase64 = null;
 let selectedMime = 'image/jpeg';
 let deferredPrompt = null;
-let lastShareMessage = `Free US Toll & DMV Scam Checker — check if any toll SMS or car notice is SCAM or REAL in 2 seconds: ${SITE_URL}`;
+let lastShareMessage = `Got a weird US toll SMS or DMV notice? Check SCAM or REAL in 2 seconds for free: ${SITE_URL}`;
 
 // ===================================================
-// 1. 1.8s Premium Splash Screen (Tap to skip early)
-// ===================================================
-function hideSplash() {
-  if (!splashScreen || splashScreen.classList.contains('splash-hide')) return;
-  splashScreen.classList.add('splash-hide');
-  setTimeout(() => {
-    splashScreen.style.display = 'none';
-  }, 480);
-}
-
-setTimeout(hideSplash, 1800);
-if (splashScreen) {
-  splashScreen.addEventListener('click', hideSplash);
-}
-
-// ===================================================
-// 2. Auto-Build Crisp 180x180 PNG Apple Touch Icon
-// ===================================================
-(function buildAppleIcon() {
-  try {
-    const link = document.getElementById('appleTouchIcon');
-    if (!link) return;
-    const svgStr = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="180" height="180"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00f0ff"/><stop offset="100%" stop-color="#ff00e5"/></linearGradient></defs><rect width="100" height="100" fill="#070a18"/><g transform="translate(0,14)" stroke-linecap="round" stroke-linejoin="round"><path d="M 18 30 L 28 14 Q 50 9 72 14 L 82 30 Z" fill="#0f1b33" stroke="url(#g)" stroke-width="2.8"/><path d="M 8 48 L 11 34 Q 15 30 22 30 L 78 30 Q 85 30 89 34 L 92 48 Q 92 54 86 54 L 14 54 Q 8 54 8 48 Z" fill="#0c1428" stroke="url(#g)" stroke-width="3"/><path d="M 14 39 L 29 41 L 26 45 L 13 44 Z" fill="#00f0ff"/><path d="M 86 39 L 71 41 L 74 45 L 87 44 Z" fill="#ff00e5"/><rect x="35" y="42" width="30" height="7" rx="2" fill="none" stroke="url(#g)" stroke-width="2"/><rect x="14" y="54" width="15" height="7" rx="2" fill="#090d1a" stroke="#00f0ff" stroke-width="2.2"/><rect x="71" y="54" width="15" height="7" rx="2" fill="#090d1a" stroke="#ff00e5" stroke-width="2.2"/></g></svg>`;
-    const img = new Image();
-    img.onload = () => {
-      const c = document.createElement('canvas');
-      c.width = 180;
-      c.height = 180;
-      c.getContext('2d').drawImage(img, 0, 0, 180, 180);
-      link.href = c.toDataURL('image/png');
-    };
-    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgStr);
-  } catch (_) {}
-})();
-
-// ===================================================
-// 3. Bulletproof Android & iPhone PWA Install
+// 1. Android & iPhone PWA Home Screen Install
 // ===================================================
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -108,20 +73,22 @@ const isStandalone =
   window.matchMedia('(display-mode: standalone)').matches ||
   window.navigator.standalone === true;
 
-if (isStandalone) {
+if (isStandalone && installBtn) {
   installBtn.hidden = true;
 }
 
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  installBtn.hidden = false;
-  installBtn.textContent = 'Install App';
+  if (installBtn) {
+    installBtn.hidden = false;
+    installBtn.textContent = 'Install';
+  }
 });
 
 window.addEventListener('appinstalled', () => {
   deferredPrompt = null;
-  installBtn.hidden = true;
+  if (installBtn) installBtn.hidden = true;
 });
 
 function openInstallGuide() {
@@ -130,16 +97,16 @@ function openInstallGuide() {
 
   if (isIOS) {
     installModalTitle.textContent = 'Install on iPhone / iPad';
-    installModalNote.textContent = 'Open in Safari and follow these 2 quick steps:';
+    installModalNote.textContent = 'Add CarDesk ScamCheck to your iPhone Home Screen in 2 taps (Safari):';
     steps = [
-      'Tap the <strong>Share</strong> icon at the bottom of Safari.',
+      'Tap the <strong>Share</strong> icon (square with upward arrow) at the bottom of Safari.',
       'Scroll down and tap <strong>Add to Home Screen</strong>, then tap <strong>Add</strong>.'
     ];
   } else if (isAndroid) {
     installModalTitle.textContent = 'Install on Android';
-    installModalNote.textContent = 'If the automatic popup did not appear, install in 2 taps:';
+    installModalNote.textContent = 'Add CarDesk ScamCheck directly to your Home Screen:';
     steps = [
-      'Make sure this page is open in <strong>Google Chrome</strong> (not inside WhatsApp or Instagram).',
+      'Make sure this link is open in <strong>Google Chrome</strong> (not inside WhatsApp/Instagram browser).',
       'Tap the <strong>3 dots (&#8942;)</strong> at the top-right corner of Chrome.',
       'Tap <strong>Install app</strong> or <strong>Add to Home screen</strong>.'
     ];
@@ -148,7 +115,7 @@ function openInstallGuide() {
     installModalNote.textContent = 'Add CarDesk ScamCheck to your computer:';
     steps = [
       'Click the <strong>Install icon</strong> on the right side of your Chrome or Edge address bar.',
-      'Click <strong>Install</strong> to open it like a standalone app.'
+      'Click <strong>Install</strong> to launch it as a standalone app.'
     ];
   }
 
@@ -161,65 +128,114 @@ function openInstallGuide() {
   installModal.hidden = false;
 }
 
-installBtn.addEventListener('click', async () => {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    if (outcome === 'accepted') {
-      installBtn.hidden = true;
+if (installBtn) {
+  installBtn.addEventListener('click', async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      if (outcome === 'accepted') {
+        installBtn.hidden = true;
+      }
+    } else {
+      openInstallGuide();
     }
-  } else {
-    openInstallGuide();
+  });
+}
+
+if (closeInstallModal) {
+  closeInstallModal.addEventListener('click', () => (installModal.hidden = true));
+}
+if (installModal) {
+  installModal.addEventListener('click', (e) => {
+    if (e.target === installModal) installModal.hidden = true;
+  });
+}
+
+// ===================================================
+// 2. Legal Modals (Terms of Service & Privacy Policy)
+// ===================================================
+document.querySelectorAll('[data-open-modal]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const modal = document.getElementById(btn.getAttribute('data-open-modal'));
+    if (modal) modal.hidden = false;
+  });
+});
+
+document.querySelectorAll('[data-close-modal]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const modal = document.getElementById(btn.getAttribute('data-close-modal'));
+    if (modal) modal.hidden = true;
+  });
+});
+
+['termsModal', 'privacyModal'].forEach((id) => {
+  const modal = document.getElementById(id);
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.hidden = true;
+    });
   }
 });
 
-closeInstallModal.addEventListener('click', () => (installModal.hidden = true));
-installModal.addEventListener('click', (e) => {
-  if (e.target === installModal) installModal.hidden = true;
-});
-
 // ===================================================
-// 4. Social Share Links Setup
+// 3. Live Social Share (WhatsApp, SMS, X, FB, Reddit)
 // ===================================================
-function updateShareLinks(text) {
-  lastShareMessage = text;
+function buildShareUrls(text) {
   const encText = encodeURIComponent(text);
   const encUrl = encodeURIComponent(SITE_URL);
-  const titleOnly = encodeURIComponent('Free US Toll & DMV Scam Checker — SCAM or REAL in 2s');
+  const titleOnly = encodeURIComponent('Free US Toll & DMV Scam Checker — SCAM or REAL in 2s (CarDesk US)');
+  return {
+    wa: `https://api.whatsapp.com/send?text=${encText}`,
+    sms: isIOS ? `sms:&body=${encText}` : `sms:?body=${encText}`,
+    x: `https://twitter.com/intent/tweet?text=${encText}`,
+    fb: `https://www.facebook.com/sharer/sharer.php?u=${encUrl}`,
+    reddit: `https://www.reddit.com/submit?url=${encUrl}&title=${titleOnly}`
+  };
+}
 
-  shareWa.href = `https://wa.me/?text=${encText}`;
-  shareSms.href = isIOS ? `sms:&body=${encText}` : `sms:?body=${encText}`;
-  shareX.href = `https://twitter.com/intent/tweet?text=${encText}`;
-  shareFb.href = `https://www.facebook.com/sharer/sharer.php?u=${encUrl}`;
-  shareReddit.href = `https://www.reddit.com/submit?url=${encUrl}&title=${titleOnly}`;
+function updateResultShareLinks(text) {
+  lastShareMessage = text;
+  const urls = buildShareUrls(text);
+  if (shareWa) shareWa.href = urls.wa;
+  if (shareSms) shareSms.href = urls.sms;
+  if (shareX) shareX.href = urls.x;
+  if (shareFb) shareFb.href = urls.fb;
+  if (shareReddit) shareReddit.href = urls.reddit;
 }
 
 (function initFooterShare() {
   const defaultMsg = `Got a weird US toll SMS or DMV notice? Check SCAM or REAL in 2 seconds for free: ${SITE_URL}`;
-  const encText = encodeURIComponent(defaultMsg);
-  const encUrl = encodeURIComponent(SITE_URL);
-  const titleOnly = encodeURIComponent('Free US Toll & DMV Scam Checker (CarDesk US)');
-
-  footWa.href = `https://wa.me/?text=${encText}`;
-  footX.href = `https://twitter.com/intent/tweet?text=${encText}`;
-  footFb.href = `https://www.facebook.com/sharer/sharer.php?u=${encUrl}`;
-  footReddit.href = `https://www.reddit.com/submit?url=${encUrl}&title=${titleOnly}`;
+  const urls = buildShareUrls(defaultMsg);
+  if (footWa) footWa.href = urls.wa;
+  if (footSms) footSms.href = urls.sms;
+  if (footX) footX.href = urls.x;
+  if (footFb) footFb.href = urls.fb;
+  if (footReddit) footReddit.href = urls.reddit;
 
   if (navigator.share) {
-    nativeShareBtn.hidden = false;
+    if (nativeShareBtn) nativeShareBtn.hidden = false;
+    if (footNativeShare) footNativeShare.hidden = false;
   }
 })();
 
-nativeShareBtn.addEventListener('click', () => {
-  if (navigator.share) {
-    navigator.share({
-      title: 'CarDesk US — Free Toll & DMV Scam Checker',
-      text: lastShareMessage,
-      url: SITE_URL
-    }).catch(() => {});
-  }
-});
+function triggerNativeShare(msg) {
+  if (!navigator.share) return;
+  navigator.share({
+    title: 'CarDesk US — Free Toll & DMV Scam Checker',
+    text: msg,
+    url: SITE_URL
+  }).catch(() => {});
+}
+
+if (nativeShareBtn) {
+  nativeShareBtn.addEventListener('click', () => triggerNativeShare(lastShareMessage));
+}
+if (footNativeShare) {
+  footNativeShare.addEventListener('click', () =>
+    triggerNativeShare('Got a weird US toll SMS or DMV notice? Check SCAM or REAL in 2 seconds for free:')
+  );
+}
 
 async function copyShareUrl(btnEl, originalLabel) {
   try {
@@ -231,11 +247,11 @@ async function copyShareUrl(btnEl, originalLabel) {
   }
 }
 
-copyLinkBtn.addEventListener('click', () => copyShareUrl(copyLinkBtn, 'Copy Link'));
-footCopy.addEventListener('click', () => copyShareUrl(footCopy, 'Copy Link'));
+if (copyLinkBtn) copyLinkBtn.addEventListener('click', () => copyShareUrl(copyLinkBtn, 'Copy Link'));
+if (footCopy) footCopy.addEventListener('click', () => copyShareUrl(footCopy, 'Copy Link'));
 
 // ===================================================
-// 5. Image Upload, Drag-Drop, Paste & Compression
+// 4. Image Upload, Drag-Drop, Paste & Compression
 // ===================================================
 ['dragenter', 'dragover'].forEach((evt) => {
   dropZone.addEventListener(evt, (e) => {
@@ -335,7 +351,7 @@ function handleImageFile(file) {
 }
 
 // ===================================================
-// 6. Run AI Check & Render Dynamic Cross-Sell Verdict
+// 5. Run AI Check & Render Dynamic Cross-Sell Verdict
 // ===================================================
 checkBtn.addEventListener('click', async () => {
   hideError();
@@ -387,7 +403,7 @@ function renderResult(data) {
       'Whenever you get a real US parking, red-light, or speed camera ticket, build a state-specific appeal packet in 60 seconds for $9.99.';
     ctaButton.textContent = 'Open CarDesk Ticket AI →';
     ctaButton.href = 'https://ticket.cardeskus.com/?ref=scamcheck_scam';
-    updateShareLinks(`Heads up! I just checked a suspicious US toll/DMV text and it came back SCAM. Check yours free in 2 seconds: ${SITE_URL}`);
+    updateResultShareLinks(`Heads up! I just checked a suspicious US toll/DMV text and it came back SCAM. Check yours free in 2 seconds: ${SITE_URL}`);
   } else if (verdict === 'REAL') {
     verdictBanner.classList.add('is-real');
     verdictWord.textContent = 'REAL';
@@ -397,7 +413,7 @@ function renderResult(data) {
       'Fight unfair US parking or camera tickets in 60 seconds. Get a state-specific appeal letter, AI error audit & 4-shot evidence guide for just $9.99.';
     ctaButton.textContent = 'Build My Appeal Packet ($9.99) →';
     ctaButton.href = 'https://ticket.cardeskus.com/?ref=scamcheck_real';
-    updateShareLinks(`Just verified a US notice in 2 seconds with this free CarDesk US tool. Check any toll SMS or DMV notice free here: ${SITE_URL}`);
+    updateResultShareLinks(`Just verified a US notice in 2 seconds with this free CarDesk US tool. Check any toll SMS or DMV notice free here: ${SITE_URL}`);
   } else {
     verdictBanner.classList.add('is-suspicious');
     verdictWord.textContent = 'LIKELY SCAM';
@@ -407,7 +423,38 @@ function renderResult(data) {
       'Appeal unfair US parking and camera tickets in 60 seconds with CarDesk US Ticket AI — one-time $9.99.';
     ctaButton.textContent = 'Check CarDesk Ticket AI →';
     ctaButton.href = 'https://ticket.cardeskus.com/?ref=scamcheck_suspicious';
-    updateShareLinks(`Heads up! Watch out for fake US toll & DMV texts. Check any screenshot free in 2 seconds: ${SITE_URL}`);
+    updateResultShareLinks(`Heads up! Watch out for fake US toll & DMV texts. Check any screenshot free in 2 seconds: ${SITE_URL}`);
   }
 
-  detectedType.
+  detectedType.textContent = data.detectedType || 'US Toll / DMV Check';
+  confidenceBadge.textContent = `${data.confidence || 94}% Confidence`;
+  verdictHeadline.textContent = data.headline || '';
+  verdictSummary.textContent = data.summary || '';
+
+  reasonsList.innerHTML = '';
+  (data.reasons || []).slice(0, 4).forEach((item) => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    reasonsList.appendChild(li);
+  });
+
+  stepsList.innerHTML = '';
+  (data.nextSteps || []).slice(0, 3).forEach((item) => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    stepsList.appendChild(li);
+  });
+
+  loadingCard.hidden = true;
+  resultCard.hidden = false;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+resetBtn.addEventListener('click', () => {
+  clearImage();
+  smsInput.value = '';
+  hideError();
+  resultCard.hidden = true;
+  checkerCard.hidden = false;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
