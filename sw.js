@@ -1,9 +1,11 @@
-const CACHE_NAME = 'cardesk-scamcheck-v3';
-const STATIC_ASSETS = ['/', '/index.html', '/style.css?v=3', '/app.js?v=3', '/manifest.json?v=3'];
+const CACHE_NAME = 'cardesk-scamcheck-v4';
+const STATIC_ASSETS = ['/', '/index.html', '/style.css?v=4', '/app.js?v=4', '/manifest.json'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
+    caches.open(CACHE_NAME).then((cache) =>
+      Promise.allSettled(STATIC_ASSETS.map((url) => cache.add(url)))
+    )
   );
   self.skipWaiting();
 });
@@ -22,8 +24,10 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(event.request)
       .then((res) => {
-        const clone = res.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        if (res && res.status === 200 && res.type === 'basic') {
+          const clone = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        }
         return res;
       })
       .catch(() => caches.match(event.request))
