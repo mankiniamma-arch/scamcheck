@@ -1,5 +1,5 @@
-const CACHE_NAME = 'cardesk-scamcheck-v1';
-const STATIC_ASSETS = ['/', '/index.html', '/style.css', '/app.js', '/manifest.json'];
+const CACHE_NAME = 'cardesk-scamcheck-v2';
+const STATIC_ASSETS = ['/', '/index.html', '/style.css?v=2', '/app.js?v=2', '/manifest.json'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
