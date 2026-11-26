@@ -16,31 +16,41 @@
   <meta property="og:url" content="https://scamcheck.cardeskus.com/" />
   <meta property="og:title" content="Free US Toll &amp; DMV Scam Checker — SCAM or REAL in 2 Seconds" />
   <meta property="og:description" content="Upload any US toll text screenshot or car notice photo. Free AI tells you SCAM or REAL instantly — no signup required." />
-  <meta property="og:image" content="https://scamcheck.cardeskus.com/api/icon?size=512" />
+  <meta property="og:image" content="https://scamcheck.cardeskus.com/icon-512.png" />
 
   <!-- Twitter / X Preview -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Free US Toll &amp; DMV Scam Checker — CarDesk US" />
   <meta name="twitter:description" content="Check SunPass, E-ZPass, FasTrak, TxTag &amp; DMV texts in 2 seconds. 100% free." />
-  <meta name="twitter:image" content="https://scamcheck.cardeskus.com/api/icon?size=512" />
+  <meta name="twitter:image" content="https://scamcheck.cardeskus.com/icon-512.png" />
 
-  <!-- Unified CarDesk US Favicon + Apple & Android Home Screen PNG Icons -->
+  <!-- Unified CarDesk US Favicon + Apple & Android & Windows PNG Icons -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%2300f0ff'/%3E%3Cstop offset='100%25' stop-color='%23ff00e5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='%23070a18'/%3E%3Crect x='2' y='2' width='96' height='96' rx='20' fill='none' stroke='url(%23g)' stroke-width='2.4' stroke-opacity='0.7'/%3E%3Cg transform='translate(0,14)' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M 18 30 L 28 14 Q 50 9 72 14 L 82 30 Z' fill='%230f1b33' stroke='url(%23g)' stroke-width='2.8'/%3E%3Cpath d='M 8 48 L 11 34 Q 15 30 22 30 L 78 30 Q 85 30 89 34 L 92 48 Q 92 54 86 54 L 14 54 Q 8 54 8 48 Z' fill='%230c1428' stroke='url(%23g)' stroke-width='3'/%3E%3Cpath d='M 14 39 L 29 41 L 26 45 L 13 44 Z' fill='%2300f0ff'/%3E%3Cpath d='M 86 39 L 71 41 L 74 45 L 87 44 Z' fill='%23ff00e5'/%3E%3Crect x='35' y='42' width='30' height='7' rx='2' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3Crect x='14' y='54' width='15' height='7' rx='2' fill='%23090d1a' stroke='%2300f0ff' stroke-width='2.2'/%3E%3Crect x='71' y='54' width='15' height='7' rx='2' fill='%23090d1a' stroke='%23ff00e5' stroke-width='2.2'/%3E%3C/g%3E%3C/svg%3E" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/api/icon?size=192" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/api/icon?size=180" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-  <!-- PWA Mobile App Support (Android + iPhone) -->
-  <link rel="manifest" href="/manifest.json?v=3" />
+  <!-- PWA App Support (Android + iPhone + Windows/Mac Chrome/Edge) -->
+  <link rel="manifest" href="/manifest.json" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="CarDesk ScamCheck" />
 
+  <!-- Early Capture of Native Install Event (Never misses desktop/Android prompt) -->
+  <script>
+    window.__deferredInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', function (e) {
+      e.preventDefault();
+      window.__deferredInstallPrompt = e;
+      window.dispatchEvent(new Event('cardesk-install-ready'));
+    });
+  </script>
+
   <!-- Non-blocking Font Load -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-  <link rel="stylesheet" href="/style.css?v=3" />
+  <link rel="stylesheet" href="/style.css?v=4" />
 
   <!-- Google Rich SEO Schema -->
   <script type="application/ld+json">
@@ -52,7 +62,7 @@
         "name": "CarDesk US Toll & DMV Scam Checker",
         "url": "https://scamcheck.cardeskus.com/",
         "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Android, iOS, Web",
+        "operatingSystem": "Android, iOS, Windows, macOS, Web",
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -152,11 +162,11 @@
     </div>
   </div>
 
-  <!-- Ambient Vice Neon Glow -->
+  <!-- Ambient Vice Neon Glows -->
   <div class="bg-glow bg-glow-cyan" aria-hidden="true"></div>
   <div class="bg-glow bg-glow-magenta" aria-hidden="true"></div>
 
-  <!-- Top Navigation -->
+  <!-- Full-Width Responsive Navbar -->
   <header class="navbar">
     <div class="nav-inner">
       <a href="/" class="brand-logo" aria-label="CarDesk US Home">
@@ -184,8 +194,21 @@
         </span>
       </a>
 
+      <!-- Clean Desktop Navigation Links -->
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="#top">Scam Scanner</a>
+        <a href="#tools">CarDesk Tools</a>
+        <a href="#faq">US Scam FAQ</a>
+        <a href="https://ticket.cardeskus.com/?ref=scamcheck_nav" target="_blank" rel="noopener noreferrer" class="nav-pill-link">Ticket AI &rarr;</a>
+      </nav>
+
       <button id="installBtn" class="install-btn" type="button">
-        Install
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        <span>Install App</span>
       </button>
     </div>
   </header>
@@ -218,7 +241,7 @@
           var tRect = target.getBoundingClientRect();
           var dx = (tRect.left + tRect.width / 2) - (bRect.left + bRect.width / 2);
           var dy = (tRect.top + tRect.height / 2) - (bRect.top + bRect.height / 2);
-          var scale = Math.max(0.24, Math.min(0.42, tRect.width / bRect.width));
+          var scale = Math.max(0.22, Math.min(0.42, tRect.width / bRect.width));
 
           badge.style.transition = 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease 0.42s';
           badge.style.transform = 'translate3d(' + dx.toFixed(1) + 'px, ' + dy.toFixed(1) + 'px, 0) scale(' + scale.toFixed(3) + ')';
@@ -235,172 +258,241 @@
     })();
   </script>
 
-  <main class="container" id="top">
-    <!-- Hero -->
-    <section class="hero">
-      <div class="free-pill">US 50 STATES + D.C. &bull; 100% FREE</div>
-      <h1>
-        Spot Fake Toll Texts &amp; DMV Notices in
-        <span class="neon-text">2 Seconds</span>
-      </h1>
-      <p class="subtitle">
-        Upload a toll SMS screenshot or car notice photo. AI tells you instantly if it&apos;s
-        <strong>SCAM</strong> or <strong>REAL</strong> — no login, completely free.
-      </p>
-    </section>
-
-    <!-- Main Scanner Card -->
-    <section class="card" id="checkerCard">
-      <label class="drop-zone" id="dropZone" for="fileInput">
-        <input type="file" id="fileInput" accept="image/*" hidden />
-        <div class="upload-badge" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="17 8 12 3 7 8"/>
-            <line x1="12" y1="3" x2="12" y2="15"/>
-          </svg>
-        </div>
-        <div class="drop-title">Tap to Upload Screenshot or Photo</div>
-        <div class="drop-sub">SunPass, E-ZPass, FasTrak, TxTag SMS, DMV letter, or car notice</div>
-      </label>
-
-      <div class="preview-box" id="previewBox" hidden>
-        <img id="previewImg" alt="Uploaded notice preview" />
-        <button type="button" id="removeImgBtn" class="remove-btn" aria-label="Remove photo">&times;</button>
-      </div>
-
-      <div class="divider"><span>or paste SMS text</span></div>
-
-      <textarea
-        id="smsInput"
-        rows="3"
-        placeholder="Paste suspicious toll or DMV text message here (optional)..."
-      ></textarea>
-
-      <p class="error-msg" id="errorMsg" hidden></p>
-
-      <button type="button" id="checkBtn" class="btn-primary">
-        Check SCAM or REAL — Free
-      </button>
-    </section>
-
-    <!-- AI Scanning State -->
-    <section class="card loading-card" id="loadingCard" hidden>
-      <div class="scanner-ring" aria-hidden="true"></div>
-      <div class="loading-title">Analyzing with AI...</div>
-      <p class="loading-sub">Checking links, sender patterns &amp; official US agency formats</p>
-    </section>
-
-    <!-- Verdict Result -->
-    <section class="result-wrap" id="resultCard" hidden>
-      <div class="verdict-banner" id="verdictBanner">
-        <div class="verdict-meta">
-          <span class="meta-chip" id="detectedType">US Notice Check</span>
-          <span class="meta-chip" id="confidenceBadge">98% Confidence</span>
-        </div>
-        <div class="verdict-word" id="verdictWord">SCAM</div>
-        <div class="verdict-headline" id="verdictHeadline">Fake US Toll Smishing Text</div>
-        <p class="verdict-summary" id="verdictSummary"></p>
-      </div>
-
-      <div class="card detail-card">
-        <div class="detail-label">Why this verdict</div>
-        <ul class="clean-list" id="reasonsList"></ul>
-
-        <div class="detail-label next-label">What to do next</div>
-        <ul class="clean-list steps-list" id="stepsList"></ul>
-      </div>
-
-      <!-- Primary Paid Ticket Conversion Box -->
-      <div class="ticket-cta">
-        <div class="cta-kicker" id="ctaKicker">CARDESK US &bull; PAID TICKET TOOL</div>
-        <h2 id="ctaTitle">Got a Real US Parking or Camera Ticket?</h2>
-        <p id="ctaDesc">
-          Skip $150+ fines. Generate a state-specific appeal letter, AI error audit &amp; evidence packet in 60 seconds for just $9.99.
+  <main class="page-shell" id="top">
+    <!-- Responsive Above-the-Fold 2-Column Workspace on Desktop, Single Column on Mobile -->
+    <section class="workspace-grid">
+      <!-- Left Column: Hero, Trust Highlights & 3-Step Flow -->
+      <div class="hero-col">
+        <div class="free-pill">US 50 STATES + D.C. &bull; 100% FREE AI CHECKER</div>
+        <h1>
+          Spot Fake Toll Texts &amp; DMV Notices in
+          <span class="neon-text">2 Seconds</span>
+        </h1>
+        <p class="subtitle">
+          Upload a toll SMS screenshot, drag &amp; drop a photo, or paste the message. AI verifies instantly if it&apos;s
+          <strong>SCAM</strong> or <strong>REAL</strong> — zero signup, zero storage.
         </p>
-        <a
-          href="https://ticket.cardeskus.com/?ref=scamcheck"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn-primary cta-link"
-          id="ctaButton"
-        >
-          Fight My Ticket in 60 Seconds &rarr;
-        </a>
+
+        <!-- Clean Trust Chips -->
+        <div class="trust-row">
+          <div class="trust-chip"><span class="dot-cyan"></span>No Login or Card</div>
+          <div class="trust-chip"><span class="dot-mag"></span>Zero Data Stored</div>
+          <div class="trust-chip"><span class="dot-green"></span>All 50 US States</div>
+        </div>
+
+        <!-- Supported US Agencies Strip (Desktop & Tablet Polish) -->
+        <div class="agency-box">
+          <div class="agency-label">DETECTS FAKE &amp; REAL NOTICES FOR</div>
+          <div class="agency-tags">
+            <span>SunPass</span>
+            <span>E-ZPass</span>
+            <span>FasTrak</span>
+            <span>TxTag</span>
+            <span>NTTA</span>
+            <span>I-PASS</span>
+            <span>Peach Pass</span>
+            <span>State DMVs</span>
+            <span>Parking Tickets</span>
+          </div>
+        </div>
+
+        <!-- Crisp 3-Step Mini Bar -->
+        <div class="mini-steps">
+          <div class="mini-step">
+            <span class="step-num">1</span>
+            <div>
+              <strong>Upload or Paste</strong>
+              <span>Screenshot, photo, or Ctrl+V</span>
+            </div>
+          </div>
+          <div class="mini-step">
+            <span class="step-num">2</span>
+            <div>
+              <strong>2-Second AI Audit</strong>
+              <span>Links, sender &amp; agency checks</span>
+            </div>
+          </div>
+          <div class="mini-step">
+            <span class="step-num">3</span>
+            <div>
+              <strong>Clear Next Steps</strong>
+              <span>SCAM alert or real ticket help</span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Viral 1-Tap Social Share Strip -->
-      <div class="card share-card">
-        <div class="share-head">
-          <span class="share-title">Warn family &amp; friends</span>
-          <span class="share-sub">Help someone avoid toll scams</span>
-        </div>
-        <div class="share-grid">
-          <button type="button" class="share-btn share-native" id="nativeShareBtn" hidden>Share</button>
-          <a class="share-btn share-wa" id="shareWa" href="https://api.whatsapp.com/send?text=Got%20a%20weird%20US%20toll%20SMS%20or%20DMV%20notice%3F%20Check%20SCAM%20or%20REAL%20in%202%20seconds%20for%20free%3A%20https%3A%2F%2Fscamcheck.cardeskus.com%2F" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-          <a class="share-btn" id="shareSms" href="sms:?&body=Got%20a%20weird%20US%20toll%20SMS%20or%20DMV%20notice%3F%20Check%20SCAM%20or%20REAL%20in%202%20seconds%20for%20free%3A%20https%3A%2F%2Fscamcheck.cardeskus.com%2F">SMS</a>
-          <a class="share-btn" id="shareX" href="https://twitter.com/intent/tweet?text=Got%20a%20weird%20US%20toll%20SMS%20or%20DMV%20notice%3F%20Check%20SCAM%20or%20REAL%20in%202%20seconds%20for%20free%3A%20https%3A%2F%2Fscamcheck.cardeskus.com%2F" target="_blank" rel="noopener noreferrer">X</a>
-          <a class="share-btn" id="shareFb" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fscamcheck.cardeskus.com%2F" target="_blank" rel="noopener noreferrer">Facebook</a>
-          <a class="share-btn" id="shareReddit" href="https://www.reddit.com/submit?url=https%3A%2F%2Fscamcheck.cardeskus.com%2F&title=Free%20US%20Toll%20%26%20DMV%20Scam%20Checker%20%E2%80%94%20Check%20SCAM%20or%20REAL%20in%202%20Seconds" target="_blank" rel="noopener noreferrer">Reddit</a>
-          <button type="button" class="share-btn" id="copyLinkBtn">Copy Link</button>
-        </div>
-      </div>
+      <!-- Right Column: Interactive Scanner / Loading / Verdict -->
+      <div class="tool-col">
+        <!-- Main Scanner Card -->
+        <section class="card scanner-card" id="checkerCard">
+          <div class="card-top-bar">
+            <span class="card-status-dot"></span>
+            <span>Live AI Notice Scanner</span>
+            <span class="shortcut-hint">Drag &amp; drop or Ctrl+V</span>
+          </div>
 
-      <button type="button" id="resetBtn" class="btn-secondary">
-        Check Another Screenshot or Text
-      </button>
+          <label class="drop-zone" id="dropZone" for="fileInput">
+            <input type="file" id="fileInput" accept="image/*" hidden />
+            <div class="upload-badge" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+            </div>
+            <div class="drop-title">Upload Screenshot or Notice Photo</div>
+            <div class="drop-sub">Tap to browse, drag &amp; drop, or paste screenshot directly</div>
+          </label>
+
+          <div class="preview-box" id="previewBox" hidden>
+            <img id="previewImg" alt="Uploaded notice preview" />
+            <button type="button" id="removeImgBtn" class="remove-btn" aria-label="Remove photo">&times;</button>
+          </div>
+
+          <div class="divider"><span>or paste SMS text</span></div>
+
+          <textarea
+            id="smsInput"
+            rows="3"
+            placeholder="Paste suspicious SunPass, E-ZPass, FasTrak, TxTag, or DMV text message here..."
+          ></textarea>
+
+          <p class="error-msg" id="errorMsg" hidden></p>
+
+          <button type="button" id="checkBtn" class="btn-primary">
+            Check SCAM or REAL — Free
+          </button>
+        </section>
+
+        <!-- AI Scanning State -->
+        <section class="card loading-card" id="loadingCard" hidden>
+          <div class="scanner-ring" aria-hidden="true"></div>
+          <div class="loading-title">Analyzing with AI...</div>
+          <p class="loading-sub">Checking links, sender patterns &amp; official US agency formats</p>
+        </section>
+
+        <!-- Verdict Result -->
+        <section class="result-wrap" id="resultCard" hidden>
+          <div class="verdict-banner" id="verdictBanner">
+            <div class="verdict-meta">
+              <span class="meta-chip" id="detectedType">US Notice Check</span>
+              <span class="meta-chip" id="confidenceBadge">98% Confidence</span>
+            </div>
+            <div class="verdict-word" id="verdictWord">SCAM</div>
+            <div class="verdict-headline" id="verdictHeadline">Fake US Toll Smishing Text</div>
+            <p class="verdict-summary" id="verdictSummary"></p>
+          </div>
+
+          <div class="card detail-card">
+            <div class="detail-label">Why this verdict</div>
+            <ul class="clean-list" id="reasonsList"></ul>
+
+            <div class="detail-label next-label">What to do next</div>
+            <ul class="clean-list steps-list" id="stepsList"></ul>
+          </div>
+
+          <!-- Primary Paid Ticket Conversion Box -->
+          <div class="ticket-cta">
+            <div class="cta-kicker" id="ctaKicker">CARDESK US &bull; PAID TICKET TOOL</div>
+            <h2 id="ctaTitle">Got a Real US Parking or Camera Ticket?</h2>
+            <p id="ctaDesc">
+              Skip $150+ fines. Generate a state-specific appeal letter, AI error audit &amp; evidence packet in 60 seconds for just $9.99.
+            </p>
+            <a
+              href="https://ticket.cardeskus.com/?ref=scamcheck"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary cta-link"
+              id="ctaButton"
+            >
+              Fight My Ticket in 60 Seconds &rarr;
+            </a>
+          </div>
+
+          <!-- Viral 1-Tap Social Share Strip -->
+          <div class="card share-card">
+            <div class="share-head">
+              <span class="share-title">Warn family &amp; friends</span>
+              <span class="share-sub">Help someone avoid toll scams</span>
+            </div>
+            <div class="share-grid">
+              <button type="button" class="share-btn share-native" id="nativeShareBtn" hidden>Share</button>
+              <a class="share-btn share-wa" id="shareWa" href="https://api.whatsapp.com/send?text=Got%20a%20weird%20US%20toll%20SMS%20or%20DMV%20notice%3F%20Check%20SCAM%20or%20REAL%20in%202%20seconds%20for%20free%3A%20https%3A%2F%2Fscamcheck.cardeskus.com%2F" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+              <a class="share-btn" id="shareSms" href="sms:?&body=Got%20a%20weird%20US%20toll%20SMS%20or%20DMV%20notice%3F%20Check%20SCAM%20or%20REAL%20in%202%20seconds%20for%20free%3A%20https%3A%2F%2Fscamcheck.cardeskus.com%2F">SMS</a>
+              <a class="share-btn" id="shareX" href="https://twitter.com/intent/tweet?text=Got%20a%20weird%20US%20toll%20SMS%20or%20DMV%20notice%3F%20Check%20SCAM%20or%20REAL%20in%202%20seconds%20for%20free%3A%20https%3A%2F%2Fscamcheck.cardeskus.com%2F" target="_blank" rel="noopener noreferrer">X</a>
+              <a class="share-btn" id="shareFb" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fscamcheck.cardeskus.com%2F" target="_blank" rel="noopener noreferrer">Facebook</a>
+              <a class="share-btn" id="shareReddit" href="https://www.reddit.com/submit?url=https%3A%2F%2Fscamcheck.cardeskus.com%2F&title=Free%20US%20Toll%20%26%20DMV%20Scam%20Checker%20%E2%80%94%20Check%20SCAM%20or%20REAL%20in%202%20Seconds" target="_blank" rel="noopener noreferrer">Reddit</a>
+              <button type="button" class="share-btn" id="copyLinkBtn">Copy Link</button>
+            </div>
+          </div>
+
+          <button type="button" id="resetBtn" class="btn-secondary">
+            Check Another Screenshot or Text
+          </button>
+        </section>
+      </div>
     </section>
 
     <!-- Cross-Sell Strip: Other CarDesk US Tools -->
-    <section class="ecosystem-section" aria-label="More CarDesk US Tools">
-      <div class="section-kicker">MORE TOOLS BY CARDESK US</div>
+    <section class="ecosystem-section" id="tools" aria-label="More CarDesk US Tools">
+      <div class="section-header-row">
+        <div class="section-kicker">MORE TOOLS BY CARDESK US</div>
+        <span class="section-sub-note">Built for drivers across all 50 US states</span>
+      </div>
       <div class="eco-grid">
         <a href="https://ticket.cardeskus.com/?ref=scamcheck_card" target="_blank" rel="noopener noreferrer" class="eco-card">
           <div class="eco-top">
             <span class="eco-title">Ticket Appeal AI</span>
-            <span class="eco-tag">$9.99</span>
+            <span class="eco-tag">$9.99 One-Time</span>
           </div>
-          <p class="eco-desc">Appeal US parking, red-light &amp; speed camera tickets in 60 seconds with a state-specific letter.</p>
+          <p class="eco-desc">Appeal unfair US parking, red-light &amp; speed camera tickets in 60 seconds with a state-specific appeal letter and error audit.</p>
+          <span class="eco-cta">Open Ticket Appeal AI &rarr;</span>
         </a>
 
         <a href="https://buyercheck.cardeskus.com/?ref=scamcheck_card" target="_blank" rel="noopener noreferrer" class="eco-card">
           <div class="eco-top">
             <span class="eco-title">Used Car BuyerCheck</span>
-            <span class="eco-tag eco-tag-cyan">US Drivers</span>
+            <span class="eco-tag eco-tag-cyan">VIN &amp; Dealer Audit</span>
           </div>
-          <p class="eco-desc">Audit any used car before you buy — spot hidden dealer red flags, VIN issues &amp; overpricing.</p>
+          <p class="eco-desc">Screen any used car before you buy — spot hidden dealer red flags, NHTSA recalls, VIN issues &amp; pricing traps.</p>
+          <span class="eco-cta eco-cta-cyan">Open BuyerCheck &rarr;</span>
         </a>
       </div>
     </section>
 
-    <!-- Clean Collapsible SEO FAQ -->
+    <!-- Clean 2-Column Responsive SEO FAQ -->
     <section class="faq-section" id="faq" aria-label="Frequently Asked Questions">
-      <div class="section-kicker">US TOLL &amp; DMV SCAM FAQ</div>
+      <div class="section-header-row">
+        <div class="section-kicker">US TOLL &amp; DMV SCAM FAQ</div>
+        <span class="section-sub-note">Quick answers for US drivers</span>
+      </div>
 
-      <details class="faq-item">
-        <summary>Is that unpaid E-ZPass, SunPass, or FasTrak text a scam?</summary>
-        <p>Almost always yes. Real US toll agencies (E-ZPass, SunPass, FasTrak, TxTag, NTTA, I-PASS, Peach Pass) do not text random links threatening immediate license suspension or asking you to &ldquo;reply Y&rdquo; to activate a link.</p>
-      </details>
+      <div class="faq-grid">
+        <details class="faq-item">
+          <summary>Is that unpaid E-ZPass, SunPass, or FasTrak text a scam?</summary>
+          <p>Almost always yes. Real US toll agencies (E-ZPass, SunPass, FasTrak, TxTag, NTTA, I-PASS, Peach Pass) do not text random links threatening immediate license suspension or asking you to &ldquo;reply Y&rdquo; to activate a link.</p>
+        </details>
 
-      <details class="faq-item">
-        <summary>Does the US DMV text about driver&apos;s license suspension?</summary>
-        <p>No. State DMVs never collect overdue fines through random text message links or foreign phone numbers. Always log in directly by typing your state&apos;s official <code>.gov</code> website.</p>
-      </details>
+        <details class="faq-item">
+          <summary>Does the US DMV text about driver&apos;s license suspension?</summary>
+          <p>No. State DMVs never collect overdue fines through random text message links or foreign phone numbers. Always log in directly by typing your state&apos;s official <code>.gov</code> website.</p>
+        </details>
 
-      <details class="faq-item">
-        <summary>What if my parking or speed camera notice is actually REAL?</summary>
-        <p>Check the due date immediately so late fees don&apos;t double your fine. If the ticket seems unfair or has an error, use <a href="https://ticket.cardeskus.com/?ref=scamcheck_faq" target="_blank" rel="noopener noreferrer">CarDesk Ticket Appeal AI</a> to build a state-specific dispute packet in 60 seconds.</p>
-      </details>
+        <details class="faq-item">
+          <summary>What if my parking or speed camera notice is actually REAL?</summary>
+          <p>Check the due date immediately so late fees don&apos;t double your fine. If the ticket seems unfair or has an error, use <a href="https://ticket.cardeskus.com/?ref=scamcheck_faq" target="_blank" rel="noopener noreferrer">CarDesk Ticket Appeal AI</a> to build a state-specific dispute packet in 60 seconds.</p>
+        </details>
 
-      <details class="faq-item">
-        <summary>Is my screenshot stored or shared anywhere?</summary>
-        <p>No. Screenshots and photos are compressed on your device, analyzed live by AI, and discarded immediately. No account or credit card is ever needed.</p>
-      </details>
+        <details class="faq-item">
+          <summary>Is my screenshot stored or shared anywhere?</summary>
+          <p>No. Screenshots and photos are compressed on your device, analyzed live by AI, and discarded immediately. No account or credit card is ever needed.</p>
+        </details>
+      </div>
     </section>
 
-    <!-- Footer (Matches CarDesk US Brand & Legal Standard) -->
+    <!-- Footer (CarDesk US Standard Brand + Legal Layout) -->
     <footer class="footer">
-      <!-- Live 1-Tap Social Share Strip -->
       <div class="footer-share-box">
         <div class="footer-share-label">Share this free US scam checker:</div>
         <div class="share-grid footer-share-grid">
@@ -414,7 +506,6 @@
         </div>
       </div>
 
-      <!-- Quick Navigation Links -->
       <nav class="footer-nav" aria-label="Footer navigation">
         <a href="#top">Free AI Scam Scanner</a>
         <a href="https://buyercheck.cardeskus.com/?ref=scamcheck_footer" target="_blank" rel="noopener noreferrer">Used Car BuyerCheck</a>
@@ -422,31 +513,30 @@
         <a href="#faq">Scam FAQ</a>
       </nav>
 
-      <!-- Official Legal Disclaimer Box -->
       <div class="disclaimer-box">
         <strong>Legal Disclaimer:</strong> CarDesk US (scamcheck.cardeskus.com) is an independent <strong>AI self-help toll SMS, DMV notice, and traffic citation screening software tool</strong> owned and operated by <strong>MANKINIAMMA TECHNOLOGIES PRIVATE LIMITED</strong>. We are <strong>NOT</strong> a law firm, government agency, toll authority, or state DMV, and do not provide legal or financial advice. All SCAM/REAL verdicts, risk explanations, and next-step summaries are for self-help informational guidance only; never pay through links inside text messages and always verify directly on official <code>.gov</code> or state toll portals before taking action.
       </div>
 
-      <!-- Policy & Support Links -->
-      <div class="footer-policies">
-        <button type="button" class="policy-link" data-open-modal="termsModal">Terms of Service</button>
-        <button type="button" class="policy-link" data-open-modal="privacyModal">Privacy Policy</button>
-        <a href="https://ticket.cardeskus.com/?ref=scamcheck_policy" target="_blank" rel="noopener noreferrer">Paid Tools Policy</a>
-        <a href="mailto:support@cardeskus.com">Support</a>
-      </div>
+      <div class="footer-bottom-row">
+        <div class="footer-policies">
+          <button type="button" class="policy-link" data-open-modal="termsModal">Terms of Service</button>
+          <button type="button" class="policy-link" data-open-modal="privacyModal">Privacy Policy</button>
+          <a href="https://ticket.cardeskus.com/?ref=scamcheck_policy" target="_blank" rel="noopener noreferrer">Paid Tools Policy</a>
+          <a href="mailto:support@cardeskus.com">Support</a>
+        </div>
 
-      <!-- Company Ownership & Copyright -->
-      <p class="copyright">
-        &copy; 2026 CarDesk US &bull; Owned &amp; Operated by <strong>MANKINIAMMA TECHNOLOGIES PRIVATE LIMITED</strong> &bull; All 50 States + Washington, D.C. &bull; Support: <a href="mailto:support@cardeskus.com">support@cardeskus.com</a>
-      </p>
+        <p class="copyright">
+          &copy; 2026 CarDesk US &bull; Owned &amp; Operated by <strong>MANKINIAMMA TECHNOLOGIES PRIVATE LIMITED</strong> &bull; All 50 States + Washington, D.C. &bull; Support: <a href="mailto:support@cardeskus.com">support@cardeskus.com</a>
+        </p>
+      </div>
     </footer>
   </main>
 
-  <!-- Universal Android & iPhone Install Guide Modal -->
+  <!-- Universal Android, iPhone, Windows & Mac Install Guide Modal -->
   <div class="modal-backdrop" id="installModal" hidden>
     <div class="modal-box">
       <h3 id="installModalTitle">Install CarDesk ScamCheck App</h3>
-      <p class="modal-note" id="installModalNote">Add to your phone&apos;s home screen for instant 1-tap access:</p>
+      <p class="modal-note" id="installModalNote">Add CarDesk ScamCheck to your device for instant 1-tap access:</p>
       <ol class="install-steps" id="installStepsList"></ol>
       <button type="button" id="closeInstallModal" class="btn-secondary">Got it</button>
     </div>
@@ -486,6 +576,6 @@
     </div>
   </div>
 
-  <script src="/app.js?v=3"></script>
+  <script src="/app.js?v=4"></script>
 </body>
 </html>
