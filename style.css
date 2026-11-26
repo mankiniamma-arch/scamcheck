@@ -21,7 +21,7 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -31,120 +31,171 @@ body {
 }
 
 /* ===================================================
-   1.8s Premium Black Splash Screen + Headlight Flash
+   Running Car Assembly -> Neon Circle -> Fly to Logo
+   (Includes CSS failsafe so it can NEVER hang)
    =================================================== */
-.splash-screen {
+.intro-splash {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: radial-gradient(circle at 50% 48%, #0c1229 0%, #03050c 62%, #000000 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: opacity 0.45s ease, visibility 0.45s ease, transform 0.45s ease;
+  animation: introFailsafe 0.35s ease 2.55s forwards;
 }
 
-.splash-screen.splash-hide {
+.intro-backdrop {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 48%, #0e1633 0%, #040611 60%, #000000 100%);
+  transition: opacity 0.55s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.intro-splash.intro-reveal .intro-backdrop {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+.intro-splash.intro-done {
   opacity: 0;
   visibility: hidden;
-  transform: scale(1.03);
   pointer-events: none;
+  transition: opacity 0.28s ease;
 }
 
-.splash-inner {
+@keyframes introFailsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+.intro-stage {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  animation: splashPop 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-.splash-car-wrap {
-  width: 170px;
-  height: 136px;
+.intro-badge {
+  width: 158px;
+  height: 158px;
   display: grid;
   place-items: center;
+  will-change: transform, opacity;
 }
 
-.splash-svg {
+.intro-svg {
   width: 100%;
   height: 100%;
   overflow: visible;
+  filter: drop-shadow(0 0 22px rgba(0, 240, 255, 0.25));
 }
 
-.sp-body {
-  animation: spIdle 0.9s ease-in-out infinite;
+/* 1. Top Roof Drops In From Above */
+.car-part-top {
+  opacity: 0;
+  animation: dropTopPart 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards;
 }
 
-.sp-underglow {
-  animation: spGlowPulse 1.2s ease-in-out infinite;
+/* 2. Bottom Body Slides Up From Below */
+.car-part-bottom {
+  opacity: 0;
+  animation: riseBottomPart 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.14s forwards;
 }
 
-/* Alternating "Tak-Tak" Left / Right / Both Headlight Flash */
-.sp-hl-left {
-  animation: hlLeft 1.4s ease-in-out infinite;
+/* 3. Wheels Pop & Lock In */
+.car-part-wheels {
+  opacity: 0;
+  animation: popWheels 0.35s cubic-bezier(0.22, 1, 0.36, 1) 0.42s forwards;
 }
 
-.sp-hl-right {
-  animation: hlRight 1.4s ease-in-out infinite;
+/* 4. Alternating "Tak-Tak" Headlights */
+.intro-hl-left {
+  animation: hlLeft 1.05s ease-in-out 0.45s infinite;
 }
 
-.sp-beam-left {
-  animation: beamLeft 1.4s ease-in-out infinite;
+.intro-hl-right {
+  animation: hlRight 1.05s ease-in-out 0.45s infinite;
 }
 
-.sp-beam-right {
-  animation: beamRight 1.4s ease-in-out infinite;
+/* 5. Glowing Neon Circle Sweeps Around Car */
+.intro-ring-bg {
+  opacity: 0;
+  animation: ringBgIn 0.45s ease 0.72s forwards;
 }
 
-@keyframes splashPop {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+.intro-ring-arc {
+  stroke-dasharray: 366;
+  stroke-dashoffset: 366;
+  transform-origin: 70px 70px;
+  transform: rotate(-90deg);
+  animation: drawCircle 0.62s cubic-bezier(0.4, 0, 0.2, 1) 0.68s forwards;
 }
 
-@keyframes spIdle {
-  0%, 100% { transform: translate(10px, 14px); }
-  50% { transform: translate(10px, 12.2px); }
+@keyframes dropTopPart {
+  0%   { opacity: 0; transform: translateY(-48px); }
+  75%  { opacity: 1; transform: translateY(2px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes spGlowPulse {
-  0%, 100% { opacity: 0.35; }
-  50% { opacity: 0.85; }
+@keyframes riseBottomPart {
+  0%   { opacity: 0; transform: translateY(48px); }
+  75%  { opacity: 1; transform: translateY(-2px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popWheels {
+  0%   { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ringBgIn {
+  from { opacity: 0; }
+  to   { opacity: 0.92; }
+}
+
+@keyframes drawCircle {
+  0%   { stroke-dashoffset: 366; transform: rotate(-90deg); }
+  100% { stroke-dashoffset: 0; transform: rotate(270deg); }
 }
 
 @keyframes hlLeft {
-  0%, 8%   { opacity: 0.25; }
-  14%, 28% { opacity: 1; }
-  34%, 58% { opacity: 0.2; }
-  66%, 78% { opacity: 1; }
-  84%, 100%{ opacity: 0.95; }
+  0%, 10%  { opacity: 0.2; }
+  18%, 34% { opacity: 1; }
+  42%, 64% { opacity: 0.2; }
+  72%, 100%{ opacity: 1; }
 }
 
 @keyframes hlRight {
-  0%, 30%  { opacity: 0.2; }
-  36%, 54% { opacity: 1; }
-  60%, 76% { opacity: 0.2; }
-  84%, 100%{ opacity: 0.95; }
+  0%, 34%  { opacity: 0.2; }
+  42%, 60% { opacity: 1; }
+  66%, 76% { opacity: 0.2; }
+  82%, 100%{ opacity: 1; }
 }
 
-@keyframes beamLeft {
-  0%, 8%   { opacity: 0; }
-  14%, 28% { opacity: 0.38; }
-  34%, 58% { opacity: 0; }
-  66%, 78% { opacity: 0.35; }
-  84%, 100%{ opacity: 0.28; }
+.intro-brand-wrap {
+  margin-top: 10px;
+  opacity: 0;
+  animation: brandFadeIn 0.45s ease 0.55s forwards;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-@keyframes beamRight {
-  0%, 30%  { opacity: 0; }
-  36%, 54% { opacity: 0.38; }
-  60%, 76% { opacity: 0; }
-  84%, 100%{ opacity: 0.28; }
+.intro-brand-wrap.intro-text-out {
+  opacity: 0 !important;
+  transform: translateY(-10px);
+}
+
+@keyframes brandFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .splash-brand {
-  margin-top: 6px;
   font-size: 1.65rem;
   font-weight: 900;
   letter-spacing: -0.02em;
@@ -211,13 +262,14 @@ body {
 .brand-logo {
   display: inline-flex;
   align-items: center;
+  gap: 9px;
   text-decoration: none;
 }
 
-.brand-logo svg {
-  display: block;
-  height: 38px;
-  width: auto;
+.brand-wordmark {
+  font-size: 1.18rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
 }
 
 .nav-car-body {
@@ -895,3 +947,72 @@ textarea::placeholder {
 }
 
 .disclaimer-box strong {
+  color: #cbd5e1;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--cyan);
+}
+
+.copyright {
+  font-size: 0.74rem;
+  color: #64748b;
+}
+
+/* Install Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 5, 14, 0.84);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  z-index: 200;
+}
+
+.modal-box {
+  width: 100%;
+  max-width: 360px;
+  background: var(--surface-solid);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  border-radius: var(--radius);
+  padding: 22px;
+}
+
+.modal-box h3 {
+  font-size: 1.08rem;
+  margin-bottom: 8px;
+}
+
+.modal-note {
+  font-size: 0.84rem;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.install-steps {
+  padding-left: 18px;
+  color: #e2e8f0;
+  font-size: 0.89rem;
+  display: grid;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+[hidden] {
+  display: none !important;
+}
