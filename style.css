@@ -32,7 +32,6 @@ body {
 
 /* ===================================================
    Running Car Assembly -> Neon Circle -> Fly to Logo
-   (Includes CSS failsafe so it can NEVER hang)
    =================================================== */
 .intro-splash {
   position: fixed;
@@ -96,25 +95,21 @@ body {
   filter: drop-shadow(0 0 22px rgba(0, 240, 255, 0.25));
 }
 
-/* 1. Top Roof Drops In From Above */
 .car-part-top {
   opacity: 0;
   animation: dropTopPart 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards;
 }
 
-/* 2. Bottom Body Slides Up From Below */
 .car-part-bottom {
   opacity: 0;
   animation: riseBottomPart 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.14s forwards;
 }
 
-/* 3. Wheels Pop & Lock In */
 .car-part-wheels {
   opacity: 0;
   animation: popWheels 0.35s cubic-bezier(0.22, 1, 0.36, 1) 0.42s forwards;
 }
 
-/* 4. Alternating "Tak-Tak" Headlights */
 .intro-hl-left {
   animation: hlLeft 1.05s ease-in-out 0.45s infinite;
 }
@@ -123,7 +118,6 @@ body {
   animation: hlRight 1.05s ease-in-out 0.45s infinite;
 }
 
-/* 5. Glowing Neon Circle Sweeps Around Car */
 .intro-ring-bg {
   opacity: 0;
   animation: ringBgIn 0.45s ease 0.72s forwards;
@@ -238,7 +232,7 @@ body {
   background: radial-gradient(circle, var(--magenta), transparent 70%);
 }
 
-/* Navbar + Subtle Header Logo Animation */
+/* Navbar */
 .navbar {
   position: sticky;
   top: 0;
@@ -290,13 +284,13 @@ body {
 }
 
 .install-btn {
-  background: rgba(0, 240, 255, 0.11);
+  background: rgba(0, 240, 255, 0.1);
   color: var(--cyan);
-  border: 1px solid rgba(0, 240, 255, 0.36);
-  border-radius: 999px;
-  padding: 7px 14px;
-  font-size: 0.78rem;
-  font-weight: 700;
+  border: 1px solid rgba(0, 240, 255, 0.45);
+  border-radius: 12px;
+  padding: 7px 16px;
+  font-size: 0.82rem;
+  font-weight: 800;
   white-space: nowrap;
   cursor: pointer;
   transition: transform 0.15s ease, background 0.2s ease;
@@ -529,7 +523,7 @@ textarea::placeholder {
   padding: 14px 18px;
   border-radius: 14px;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--text);
   font-family: inherit;
   font-size: 0.92rem;
@@ -771,6 +765,11 @@ textarea::placeholder {
   background: rgba(0, 240, 255, 0.1);
 }
 
+.share-wa {
+  border-color: rgba(37, 211, 102, 0.45);
+  color: #4ade80;
+}
+
 .share-native {
   border-color: rgba(0, 240, 255, 0.45);
   color: var(--cyan);
@@ -899,103 +898,137 @@ textarea::placeholder {
   text-decoration: none;
 }
 
-/* Footer */
+/* Footer (CarDesk US Standard Legal + Brand Layout) */
 .footer {
-  margin-top: 32px;
-  padding-top: 20px;
+  margin-top: 34px;
+  padding-top: 22px;
   border-top: 1px solid var(--border);
 }
 
-.footer-share-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 16px;
-  font-size: 0.8rem;
-  color: var(--muted);
+.footer-share-box {
+  background: rgba(13, 19, 40, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 15px 16px;
+  margin-bottom: 22px;
 }
 
-.footer-share-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-}
-
-.footer-share-links a,
-.text-btn {
-  background: none;
-  border: none;
-  color: var(--cyan);
-  font-family: inherit;
+.footer-share-label {
   font-size: 0.8rem;
   font-weight: 700;
+  color: #cbd5e1;
+  margin-bottom: 10px;
+}
+
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px 20px;
+  margin-bottom: 18px;
+}
+
+.footer-nav a {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #cbd5e1;
+  text-decoration: none;
+}
+
+.footer-nav a:hover {
+  color: var(--cyan);
+}
+
+/* Golden/Amber Legal Disclaimer Box matching BuyerCheck */
+.disclaimer-box {
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.42);
+  border-radius: 16px;
+  padding: 18px 16px;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: #e7c88a;
+  margin-bottom: 18px;
+}
+
+.disclaimer-box strong {
+  color: #fbbf24;
+}
+
+.disclaimer-box code {
+  color: #fde68a;
+}
+
+.footer-policies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.footer-policies a,
+.policy-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #cbd5e1;
   text-decoration: none;
   cursor: pointer;
 }
 
-.disclaimer-box {
-  background: rgba(255, 255, 255, 0.025);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 14px;
-  font-size: 0.76rem;
-  color: var(--muted);
-  margin-bottom: 14px;
-}
-
-.disclaimer-box strong {
-  color: #cbd5e1;
-}
-
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-bottom: 10px;
-}
-
-.footer-links a {
-  font-size: 0.8rem;
-  color: var(--muted);
-  text-decoration: none;
-}
-
-.footer-links a:hover {
+.footer-policies a:hover,
+.policy-link:hover {
   color: var(--cyan);
 }
 
 .copyright {
-  font-size: 0.74rem;
-  color: #64748b;
+  font-size: 0.78rem;
+  line-height: 1.65;
+  color: #94a3b8;
 }
 
-/* Install Modal */
+.copyright strong {
+  color: #cbd5e1;
+}
+
+.copyright a {
+  color: #38bdf8;
+  text-decoration: none;
+}
+
+/* Modals (Install + Legal Terms/Privacy) */
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(3, 5, 14, 0.84);
+  background: rgba(3, 5, 14, 0.86);
   backdrop-filter: blur(6px);
   display: grid;
   place-items: center;
-  padding: 20px;
+  padding: 18px;
   z-index: 200;
 }
 
 .modal-box {
   width: 100%;
-  max-width: 360px;
+  max-width: 390px;
   background: var(--surface-solid);
   border: 1px solid rgba(0, 240, 255, 0.25);
   border-radius: var(--radius);
   padding: 22px;
 }
 
+.legal-modal {
+  max-width: 480px;
+}
+
 .modal-box h3 {
-  font-size: 1.08rem;
-  margin-bottom: 8px;
+  font-size: 1.12rem;
+  font-weight: 800;
+  margin-bottom: 10px;
 }
 
 .modal-note {
@@ -1011,6 +1044,27 @@ textarea::placeholder {
   display: grid;
   gap: 8px;
   margin-bottom: 10px;
+}
+
+.legal-body {
+  max-height: 58vh;
+  overflow-y: auto;
+  display: grid;
+  gap: 10px;
+  font-size: 0.84rem;
+  line-height: 1.58;
+  color: #cbd5e1;
+  padding-right: 4px;
+  margin-bottom: 8px;
+}
+
+.legal-body strong {
+  color: #f8fafc;
+}
+
+.legal-body a {
+  color: var(--cyan);
+  text-decoration: none;
 }
 
 [hidden] {
